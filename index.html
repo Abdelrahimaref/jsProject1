@@ -35,19 +35,18 @@
                 }
                 else{
                     for(var i = 0 ; i < num ;i++ ){
-            
                         var but = document.createElement('button');
                         var randNum = Math.floor(Math.random()*26);
                         if(arr.indexOf(randNum) == -1)
                         {
                             arr.push(randNum) ; 
-                            var  w =document.createTextNode(letter[randNum]);
-                            but.appendChild(w);
+                            var  TextCon =document.createTextNode(letter[randNum]);
+                            but.appendChild(TextCon);
                             window.localStorage.setItem('name', but.textContent);
                             but.onclick = function(){
-                                var q =this.textContent;
+                                var butText =this.textContent;
                                 for(i=0 ; i < 26 ; i++)
-                                    if(q==letter[i])
+                                    if(butText==letter[i])
                                         myImg.src=pic[i];
                             window.localStorage.setItem('name', myImg.src);        
                             }
