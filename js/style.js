@@ -6,8 +6,18 @@ var input    = document.getElementById('myInput'),
                  "img/k.jpg","img/l.jpg","img/m.jpg","img/n.jpg","img/o.jpg","img/p.jpg","img/q.jfif","img/r.jpg","img/s.jpg","img/t.jpg",
                 "img/u.jfif","img/v.jpg","img/w.jpg","img/x.jpg","img/y.jpg","img/z.jpg" ] ,
     myImg = document.getElementById('myImg') ;
+    var event,data;
+    var events = [] ;
+    function event_object(type,target,time){
+        this.type=type;
+        this.target=target;
+        this.time=time;
+    }
    generate.onclick= function(){
-       // console.log("hi");
+        events.push(new event_object(event.type,event.target, new Date()));
+        val=[event.type,event.target.textContent, new Date()];
+        localStorage.setItem(event.target.textContent,JSON.stringify(val));
+        data = JSON.parse(localStorage.getItem(event.target.textContent));
         var num = parseInt(input.value);
         var arr = [] ; 
         var c =0 ; 
@@ -26,13 +36,23 @@ var input    = document.getElementById('myInput'),
                     but.appendChild(TextCon);
                     but.style.marginRight='5px';
                     but.setAttribute('class','btn btn-primary');
-                    window.localStorage.setItem('name', but.textContent);
-                    but.onclick = function(){
+                    but.onclick = function(e){
+                        events.push(new event_object(event.type,event.target,new Date()))
+                        val=[e.type,e.target.textContent,new Date()];
+                        localStorage.setItem(e.target.textContent + ".jpg",JSON.stringify(val));
+                        data = JSON.parse(localStorage.getItem(e.target.textContent + ".jpg"));
                         var butText =this.textContent;
                         for(i=0 ; i < 26 ; i++)
+                        {
                             if(butText==letter[i])
-                                myImg.src=pic[i];
-                    window.localStorage.setItem('name', myImg.src);        
+                            {
+                                myImg.src=pic[i]; 
+                                events.push(new event_object(event.type,event.target,new Date()))
+						        val=[e.type,e.target.textContent,new Date()];
+						        localStorage.setItem(e.target.textContent + ".jpg",JSON.stringify(val));
+                                data = JSON.parse(localStorage.getItem(e.target.textContent + ".jpg")); 
+                            }
+                        }    
                     }
                     myDiv.appendChild(but);
                 }
